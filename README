@@ -1,0 +1,6 @@
+Acme-Net-IRC-Moosified-POE
+==========================
+
+An attempt to write a Net::IRC compatible shim API over POE::Component::IRC
+
+It is bound to end in tears.

@@ -1,0 +1,17 @@
+use strict;
+use inc::Module::Install;
+name 'Acme-Net-IRC-Moosified-POE';
+author 'Chris Williams <chris@bingosnet.co.uk>';
+version_from 'lib/Acme/Net/IRC/Moosified/POE.pm';
+abstract_from 'lib/Acme/Net/IRC/Moosified/POE.pm';
+license 'perl';
+auto_license holder => 'Chris Williams';
+perl_version '5.006';
+build_requires 'Test::More' => 0.47;
+requires 'Moose' => 0.79;
+requires 'MooseX::POE' => 0.203;
+requires 'POE'   => 1.006;
+requires 'POE::Component::IRC' => 6.08;
+githubmeta;
+auto_provides;
+WriteAll();
