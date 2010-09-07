@@ -13,6 +13,7 @@ use Moose::Util::TypeConstraints;
 
 has 'nickname' => (
   is => 'ro',
+  writer => 'set_nickname',
   default => sub { $ENV{IRCNICK} || eval { scalar getpwuid($>) } || $ENV{USER} || $ENV{LOGNAME} || 'WankerBot' },
   isa => subtype 'Str' => where { /^[A-Za-z_0-9`\-^\|\\\{}\[\]]+$/ },
 );
@@ -20,11 +21,13 @@ has 'nickname' => (
 has 'username' => (
   is => 'ro',
   default => sub { eval { scalar getpwuid($>) } || $ENV{USER} || $ENV{LOGNAME} || 'japh' },
+  writer => 'set_username',
 );
 
 has 'ircname' => (
   is => 'ro',
   default => sub { $ENV{IRCNAME} || eval { (getpwuid($>))[6] } || 'Just Another Perl Hacker' },
+  writer => 'set_ircname',
 );
 
 has 'parent' => (
@@ -35,15 +38,24 @@ has 'parent' => (
 has 'port' => (
   is => 'ro',
   default => sub { 6667 },
+  writer => 'set_port',
   isa => subtype 'Int' => where { $_ > 0 and $_ <= 65535 },
 );
 
 has 'hostname' => (
   is => 'ro',
+  writer => 'set_hostname',
 );
 
 has 'server' => (
   is => 'ro',
+  writer => 'set_server',
+);
+
+has 'ssl' => (
+  is => 'ro',
+  default => sub { 0 },
+  writer => 'set_ssl',
 );
 
 sub BUILDARGS {
@@ -53,6 +65,11 @@ sub BUILDARGS {
   $args{lc $_} = delete $args{$_} for keys %args;
   $args{parent} = $parent;
   return $class->SUPER::BUILDARGS(%args);
+}
+
+sub BUILD {
+  my $self = shift;
+  
 }
 
 # Prints a message to the defined error filehandle(s).
